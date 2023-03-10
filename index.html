@@ -1,0 +1,545 @@
+<!-- saved from url=(0047)https://www.cs.cmu.edu/~peiyunh/tiny/index.html -->
+<!-- Import the component -->
+<script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml"><head>
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta name="robots" content="noindex">
+
+    <title>PPR: Physically Plausible Reconstruction from Monocular Videos
+      </title>
+
+    <style type="text/css">
+      body {
+	    font-family : Times;
+	    background-color : #f2f2f2;
+	    font-size : 15px;
+      }
+
+      .content {
+	    width : 1000px;
+	    padding : 25px 25px;
+	    margin : 25px auto;
+	    background-color : #fff;
+	    border-radius: 20px;
+      }
+      .description {
+        font-family: "Times";
+        white-space: pre;
+        text-align: left;
+      }
+
+      .content-title {
+	    background-color : inherit;
+	    margin-bottom : 0;
+	    padding-bottom : 0;
+      }
+
+      a, a:visited {
+	    text-decoration: none;
+	    color : blue;
+      }
+
+      .anchor {
+      color: inherit;
+      }
+      #authors {
+	    text-align : center;
+      }
+
+      #conference {
+	    text-align : center;
+	    font-style : italic;
+      }
+
+      #authors a {
+	    margin : 0 10px;
+      }
+
+      h1 {
+	    text-align : center;
+	    font-family : Times;
+	    font-size : 35px;
+      }
+
+      h2 {
+	    font-family : Times;
+	    font-size : 25px;
+	    padding : 0; margin : 10px;
+      }
+
+      h3 {
+	    font-family : Times;
+	    font-size : 20px;
+	    padding : 0; margin : 10px;
+      }
+
+      p {
+	    font-family : Times;
+	    line-height : 130%;
+	    margin : 10px;
+      }
+
+      big {
+	    font-family : Times;
+	    font-size : 20px;
+      }
+
+      td {
+      font-size: 15px;
+      }
+
+      li {
+	    margin : 10px 0;
+      }
+
+      .samples {
+	    float : left;
+	    width : 50%;
+	    text-align : center;
+      }
+
+      .cond {
+	    float : left;
+	    margin : 0 40px;
+      }
+
+      .cond-container {
+	    width : 700px;
+	    margin : 0 auto;
+	    text-align : center;
+      }
+     #vidalign {
+         display: block;
+         margin: 0px;
+         padding: 0px;
+         position: relative;
+         top: 90px;
+         height: auto;
+         max-width: auto;
+         overflow-y: hidden;
+         overflow-x:auto;
+         word-wrap:normal;
+         white-space:nowrap;
+     }
+
+    /* Add a black background color to the top navigation */
+    .topnav {
+      background-color: rgba(0,0,0,0.2);
+      z-index:1; 
+      overflow: hidden;
+      position: fixed;
+      top: 0; /* Position the navbar at the top of the page */
+      width: 100%; /* Full width */
+    }
+    
+    /* Style the links inside the navigation bar */
+    .topnav a {
+      float: left;
+      color: #333;
+      text-align: center;
+      padding: 14px 16px;
+      text-decoration: none;
+      font-size: 17px;
+    }
+    
+    /* Change the color of links on hover */
+    .topnav a:hover {
+      background-color: #ddd;
+      color: black;
+    }
+    
+    /* Add a color to the active/current link */
+    .topnav a.active {
+      background-color: #04AA6D;
+      color: white;
+    }
+
+    .icon {
+    background: src('./icon.png');
+    height: 20px;
+    width: 20px;
+    display: block;
+    /* Other styles here */
+    }
+
+    </style>
+
+    <style>
+    model-viewer {
+      width: 300px;
+      height: 300px;
+    }
+    </style>
+  </head>
+
+    <div class="topnav">
+      <a class="active" href="#top">Top</a>
+      <a href="#vid">Video</a>
+      <a href="#abs">Paper/Code</a>
+      <a href="#results">Results</a>
+      <a href="#bib">Bibtex</a>
+    </div>
+
+    <div id="top" class="content content-title" style="text-align: center;">
+	    <h1>
+        PPR: Physically Plausible Reconstruction from Monocular Videos
+        </h1>
+<!--	<big style="color:grey;"> CVPR 2022 - Oral Presentation
+    </big>    -->
+	<p id="authors">
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <tr>
+	      <th><a href="https://gengshan-y.github.io/">Gengshan Yang</a></th>
+	      <th><a href="https://shuoyangrobotics.github.io/">Shuo Yang</a></th>
+	      <th><a href="https://www.ri.cmu.edu/ri-people/ziyang-zhang/">Ziyang Zhang</a></th>
+	      <th><a href="http://roboticexplorationlab.org/">Zachary Manchester</a></th>
+	      <th><a href="http://www.cs.cmu.edu/~deva/">Deva Ramanan</a></th>
+        </tr>
+      </table>
+      <table align="center" style="width:100%; text-align:center; table-layout: fixed">
+        <th>Carnegie Mellon University</th>
+      </table>
+	    </p>
+      <img src="./prints.001.png" style="height: 144px;"/>
+    </div>
+
+
+    <div class="content">
+      <figure style="font-family: Times; font-weight: normal; margin: 0px; padding: 0px; border: 0px; text-align: left">
+         <p style="text-align:center;">
+         <img src="./teaser.jpg" width="100%">
+         </p>
+	      <figcaption> 
+              Given casually captured videos(<b>left</b>), 
+              we build 3D models of articulated objects and environments (<b>middle</b>) 
+             whose physical configurations, such as relative scale, ground contact, 
+             and torque control profile satisfies dynamics and contact constraints (<b>right</b>). 
+        </figcaption>
+      </figure>
+      <br>
+      <br>
+      <figure style="font-family: Times; font-weight: normal; margin: 0px; padding: 0px; border: 0px; text-align: left">
+        <center>
+         <video playsinline controls autoplay muted loop width="90%">
+          <source  src="./teaser-cat.mp4" type="video/mp4">
+         </video>
+         </center>
+         <br>
+	      <figcaption> 
+             We show results of object and background scene reconstruction (top row),
+             articulated object reconstruction from different viewpoints (middle and bottom rows),
+             and the physics reconstructions (bottom left).
+        </figcaption>
+        <br>
+        <br>
+      <center>
+        <video playsinline controls autoplay muted loop width="90%">
+          <source  src="./teaser-dog.mp4" type="video/mp4">
+         </video>
+        </center>
+        <br>
+         <figcaption> 
+          Differentiable physics simulators act as effective regularizers for improving the physical plausibility of 
+          visual reconstruction algorithms. One example is forcing the deformable object 
+          reconstructions to be statically stable with ground contact, ensuring the center of mass projects within the 
+          support polygon (marked with red). The feet in contact with the ground are colored in red, with arrows indicating 
+          the direction and magnitude of the ground reaction force.
+     </figcaption>
+      </figure>
+    </div>
+    
+    
+    <div id="abs" class="content">
+      <h2>Abstract</h2>
+      <p>
+      Given multiple casually captured videos, we build 3D models of articulated objects and environments whose physics configurations, 
+      such as body mass distribution, control profile, contact, and relative scale satisfy dynamics and contact constraints. 
+      The motion of the reconstructed target can be driven by a rigid body simulator and visualized from novel viewpoints. 
+      Differentiable physics simulation acts as an effective regularizer for improving the physical plausibility of visual reconstructions. 
+      We show physics-informed reconstruction results on monocular videos of cats, dogs, and humans, 
+      reducing infeasible behaviors such as unbalanced poses, foot skating, and floating. 
+      We show the potential of estimating foot contact and center of mass through differentiable 
+      physics simulation using casual monocular videos. 
+	    </p>
+      <div id="teaser" style="margin: 12px; text-align: left;border-top: 1px solid lightgray;padding-top: 12px;">
+	        <strong>[Paper]</strong>
+	      <strong>[Code]</strong>
+          <!--
+          <a href="./banmo-cvpr.pdf">
+	        <strong>[Paper]</strong>
+          </a>
+          <a href="./banmo-poster.pdf">
+	        <strong>[Poster]</strong>
+          </a>
+          -->
+      </div>
+    </div>
+
+    <div id="vid" class="content">
+      <h2>Video</h2>
+      <video controls width="100%">
+       <source  src="./ppr-video.mp4" type="video/mp4">
+      </video>
+    </div>
+   
+    <div id="results" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+        <h2>Results</h2>
+        <p> Consider the input videos on the left, we show simulated motion over optimization iterations:</p>
+        <table align=center width=100%>
+          <tr>
+            <figure style="float:left; font-family: Times; font-weight: normal; margin: 0 0 0 2; padding: 0px; border: 0px; text-align: left; width: 23%">
+              <center>
+              <video playsinline controls autoplay muted width="100%">
+                <source  src="./vids/cat-pikachiu-{0}-vid.mp4" type="video/mp4">
+              </video>
+              <video playsinline controls autoplay muted width="100%">
+                <source  src="./vids/ama-d-{6}-vid.mp4" type="video/mp4">
+              </video>
+              </center>
+              <figcaption> 
+                  These are the input video we want to track.
+              </figcaption>
+            </figure>
+
+              <figure style="float:left; font-family: Times; font-weight: normal; margin: 0 0 0 2%; padding: 0px; border: 0px; text-align: left; width: 23%">
+                <center>
+                  <video playsinline controls autoplay muted width="100%">
+                    <source  src="./vids/cat-pikachiu00-00000.mp4" type="video/mp4">
+                  </video>
+                
+                <video playsinline controls autoplay muted width="100%">
+                  <source  src="./vids/ama-d-00000.mp4" type="video/mp4">
+                </video>
+                </center>
+                <figcaption> 
+                    At the 0-th iteration of the optimization, the physical system (rag doll model) lost balance at the first few steps.
+                </figcaption>
+              </figure>
+  
+              <figure style="float:left; font-family: Times; font-weight: normal; margin: 0 0 0 2%; padding: 0px; border: 0px; text-align: left; width: 23%">
+                <center>
+                <video playsinline controls autoplay muted width="100%">
+                  <source  src="./vids/cat-pikachiu00-00200.mp4" type="video/mp4">
+                </video>
+                
+                <video playsinline controls autoplay muted width="100%">
+                  <source  src="./vids/ama-d-00500.mp4" type="video/mp4">
+                </video>
+                
+                </center>
+                <figcaption> 
+                    After 500 iterations of optimization, the physical system starts to follow the motion in the video.
+                </figcaption>
+              </figure>
+  
+              <figure style="float:left; font-family: Times; font-weight: normal; margin: 0 0 0 2%; padding: 0px; border: 0px; text-align: left; width: 23%">
+                <center>
+                <video playsinline controls autoplay muted width="100%">
+                  <source  src="./vids/cat-pikachiu00-002000.mp4" type="video/mp4">
+                </video>
+                <video playsinline controls autoplay muted width="100%">
+                  <source  src="./vids/ama-d-02000.mp4" type="video/mp4">
+                </video>
+                </center>
+                <figcaption> 
+                    After 2000 iterations of optimization, the physical system successfully tracks the motion in the video.
+                </figcaption>
+              </figure>
+          </tr>
+        </table>
+
+        <hr>
+        <br>
+        We include <b>interactive</b> 3D meshes of the reconstructed dynamic object and the background.
+                     <br>
+                     The 3D model visualizer supports: 
+                     (1) click and drag to rotate; 
+                     (2) use two fingles on the touchpad to zoom-in/out;
+                     (3) hold command + click and drag to pan.
+
+	    	<table align=center width=100%>
+	    		<tr>
+	    			<td width=10%>
+	    		 <div>
+              <video playsinline loop controls autoplay muted width="100%">
+                  <source  src="./vids/shiba-haru-1-{0}-vid.mp4" type="video/mp4">
+              </video>
+	    		 </div>
+   	    		 <center> Video </center>
+	    			</td>
+
+	    			<td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/dog-dr.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> Differentiable Rendering Optimization </center>
+	    			</td>
+	    			
+           <td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/dog-phys.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> + Differentiable Physics Optimization </center>
+	    			</td>
+
+	    		</tr>
+	    	</table>
+                        <b>3D model visualization of results on the dog video</b>.
+                     Left: Input video. 
+                     Middle: Reconstruction with differentiable rendering optimization. 
+                     The dog is <b>floating</b> in the air.
+                     Right: Reconstruction with both differentiable rendering optimization and differentiable physics optimization. 
+                     Note the feet of the dog are <b>in contact</b> with the ground.
+
+
+	    	<table align=center width=100%>
+	    		<tr>
+	    			<td width=10%>
+	    		 <div>
+                             <video playsinline loop controls autoplay muted width="100%">
+                                 <source  src="./vids/cat-pikachiu-{0}-vid.mp4" type="video/mp4">
+                             </video>
+	    		 </div>
+   	    		 <center> Video </center>
+	    			</td>
+
+	    			<td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/cat-dr.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> Differentiable Rendering Optimization </center>
+	    			</td>
+	    			
+                    <td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/cat-phys.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> + Differentiable Physics Optimization </center>
+	    			</td>
+
+	    		</tr>
+	    	</table>
+          <b>3D model visualization of results on the cat video</b>.
+        Left: Input video. 
+        Middle: Reconstruction with differentiable rendering optimization. 
+        The cat is <b>floating</b> in the air.
+        Right: Reconstruction with both differentiable rendering optimization and differentiable physics optimization. 
+        Note the feet of the cat are <b>in contact</b> with the ground.
+
+
+	    	<table align=center width=100%>
+	    		<tr>
+	    			<td width=10%>
+	    		 <div>
+                             <video playsinline loop controls autoplay muted width="100%">
+                                 <source  src="./vids/ama-d-{0}-vid.mp4" type="video/mp4">
+                             </video>
+	    		 </div>
+   	    		 <center> Video </center>
+	    			</td>
+
+	    			<td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/human-dr.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> Differentiable Rendering Optimization </center>
+	    			</td>
+	    			
+                    <td width=45%>
+	    		 <div>
+                    <model-viewer autoplay="autoplay" camera-controls="camera-controls" src="vids/human-phys.glb"></model-viewer>
+	    		 </div>
+   	    		 <center> + Differentiable Physics Optimization </center>
+	    			</td>
+
+	    		</tr>
+	    	</table>
+                        <b>3D model visualization of results on the human video</b>.
+                     Left: Input video. 
+                     Middle: Reconstruction with differentiable rendering optimization. 
+                     The human is <b>floating</b> in the air.
+                     Right: Reconstruction with both differentiable rendering optimization and differentiable physics optimization. 
+                     Note the feet of the human are <b>in contact</b> with the ground.
+	    </center>
+<br>
+<hr>
+      More results are included below:
+      <br>
+      <a href='materials/cat-pikachu.html'> [Cat-Pikachu]</a>
+      <a href='materials/shiba-haru-1.html'> [Dog-Haru]</a>
+      <a href='materials/ama-d.html'> [AMA-D]</a>
+        </div>
+    </div>
+    
+    <!-- <div id="vid" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div> 
+        <h2>Comparisons</h2>
+    </div> -->
+	
+    <!-- <div id="aba" class="content">
+      <div style="float: right; width:70px; margin-top: 0px; margin-bottom: 25px">
+      </div>
+      <h2>Ablations</h2>
+    </div> -->
+    
+<!-- <div class="content">
+      <h2>Failure Cases: Long-range Control</h2>
+    <p>
+      
+    </p>
+</div> -->
+
+    <div id="bib" class="content">
+            <h2>Bibtex</h2>
+            <p class="description">@inproceedings{yang2023ppr,
+  title={Physically Plausible Reconstruction from Monocular Videos},
+  author={Yang, Gengshan 
+      and Yang, Shuo
+      and Zhang, Ziyang
+      and Manchester, Zachary
+      and Ramanan, Deva},
+  journal = {arXiv preprint arXiv:xxxx.xxxxx},
+  year={2023}
+}  </p>
+    </div>
+    
+
+
+    <div class="content">
+            <h2>Related Papers</h2>
+	    <p>
+        Deformable shape reconstruction from video(s):<br>
+	    <a href="https://banmo-www.github.io/"> BANMo: Building Animatable 3D Neural Models from Many Casual Videos. CVPR 2022.</a> <br>
+	    <a href="https://viser-shape.github.io/"> ViSER: Video-Specific Surface Embeddings for Articulated 3D Shape Reconstruction. NeurIPS 2021.</a> <br>
+	    <a href="https://lasr-google.github.io/"> LASR: Learning Articulated Shape Reconstruction from a Monocular Video. CVPR 2021.</a> <br>
+	    <a href="https://dove3d.github.io/"> DOVE: Learning Deformable 3D Objects by Watching Videos. arXiv preprint.</a> <br>
+        Physics-based video human reconstruction:<br>
+	    <a href="https://gartner.io/diffphy/"> Differentiable Dynamics for Articulated 3d Human Motion Reconstruction. CVPR 2022.</a> <br>
+	    <a href="https://gartner.io/trajectory/"> Trajectory Optimization for Physics-Based Reconstruction of 3d Human Pose from Monocular Video. CVPR 2022.</a> <br>
+	    <a href="https://geometry.stanford.edu/projects/human-dynamics-eccv-2020/"> Contact and Human Dynamics from Monocular Video. ECCV 2020.</a> <br>
+	    <a href="https://vcai.mpi-inf.mpg.de/projects/PhysCap/"> PhysCap: Physically Plausible Monocular 3D Motion Capture in Real Time. SIGGRAPH Asia 2020.</a> <br>
+	    </p>
+    </div>
+
+    <div class="content">
+            <h2>Acknowledgments</h2>
+            <p>
+            Gengshan Yang is supported by the Qualcomm Innovation Fellowship and CMU Argo AI Center for Autonomous Vehicle Research.
+            We thank Tao Chen and Xianyi Cheng for suggestions on simulation tools. We thank Swaminathan Gurumurthy for feedback on control and Sha Yi for help with 3D printing.
+            </p>
+    </div>
+
+
+<table width="100%" align="center" border="0" cellspacing="0" cellpadding="20">
+<tr><td>
+    <p align="right"><font size="2">
+        <a href="https://www.cs.cmu.edu/~peiyunh/">Webpage design borrowed from Peiyun Hu</a> </font>
+    </p>
+</td></tr>
+</table>
+
+</body></html> 
